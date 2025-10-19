@@ -1,6 +1,6 @@
 import * as audioModule from "./audio";
 import { SCREEN } from "./constants";
-import { setupControls } from "./controls";
+import { initCluster, cluster } from "./sketches/cluster";
 
 export const preload = () => {
   audioModule.preload();
@@ -22,15 +22,19 @@ export const setup = () => {
 
   // オーディオ解析器を初期化
   // Initialize audio analyzers
-  audioModule.initializeAudio();
+  // audioModule.initializeAudio();
 
   // オーディオファイル入力のセットアップ
   // Set up audio file input
-  audioModule.setupAudioInput();
+  // audioModule.setupAudioInput();
 
   // オーディオコントロールのセットアップ
   // Set up audio controls
-  setupControls();
+  // setupControls();
+
+  // クラスタースケッチの初期化
+  // Initialize cluster sketch
+  initCluster();
 
   // 初期のキャンバスサイズ調整
   // Initial canvas size adjustment
@@ -40,4 +44,6 @@ export const setup = () => {
 export const draw = () => {
   // 指定したスケッチの描画
   // Draw the specified sketch
+  // fireworks();
+  cluster();
 };
