@@ -33,6 +33,8 @@ class Cluster {
   duration: number;
   numBranches: number;
   childrenCreated: boolean;
+  circleColor: string;
+  branchColors: string[];
 
   /**
    * Clusterクラスのコンストラクタ
@@ -55,6 +57,10 @@ class Cluster {
       minBranches),
       (this.childrenCreated = false);
 
+    // 色を設定
+    this.circleColor = colors[Math.floor(Math.random() * colors.length)];
+
+    const branchColorsTemp = [];
     // n本の枝を等間隔に配置
     for (let i = 0; i < this.numBranches; i++) {
       // 枝のデータを作成
@@ -66,22 +72,27 @@ class Cluster {
       };
 
       this.branches.push(branch);
+
+      branchColorsTemp.push(colors[Math.floor(Math.random() * colors.length)]);
     }
+
+    this.branchColors = branchColorsTemp;
   }
 
   display() {
-    // 中心の円を描画
-    p.fill(colors[Math.floor(Math.random() * colors.length)]);
+    // 中心の円を描画（固定された色を使用）
+    p.fill(this.circleColor);
     p.noStroke();
     p.circle(this.x, this.y, 15);
 
-    // 枝（線）を描画
-    p.stroke(colors[Math.floor(Math.random() * colors.length)]);
-    p.strokeWeight(2);
-
-    for (let branch of this.branches) {
+    // 枝を順番に描画
+    for (let i = 0; i < this.branches.length; i++) {
+      const branch = this.branches[i];
       const endX = this.x + p.cos(branch.angle) * branch.length;
       const endY = this.y + p.sin(branch.angle) * branch.length;
+
+      p.stroke(this.branchColors[i]);
+      p.strokeWeight(2);
       p.line(this.x, this.y, endX, endY);
     }
   }
